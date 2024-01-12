@@ -68,7 +68,7 @@ class _ResumeFormState extends State<ResumeForm> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.isEditScreen== false ? 'Add Item' : 'Edit Item'),
+          title: Text(widget.isEditScreen == false ? 'Add Item' : 'Edit Item'),
         ),
         body: SingleChildScrollView(
           child: Padding(

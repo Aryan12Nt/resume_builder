@@ -158,6 +158,9 @@ class _ResumeScreenState extends State<ResumeScreen> {
           description: resumeDoc["description"],
           address: resumeDoc["address"],
           skills: resumeDoc["skills"],
+          edutcation: resumeDoc["education"],
+          position: resumeDoc["position"],
+          experiance: resumeDoc["experience"],
         ),
       ),
     );
