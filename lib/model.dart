@@ -6,6 +6,9 @@ class ResumeItem {
   String? address;
   String? description;
   String? skills;
+  String? experience;
+  String? education;
+  String? position;
 
   ResumeItem({
     this.skills,
@@ -15,5 +18,8 @@ class ResumeItem {
     this.phoneNumber,
     this.address,
     this.description,
+    this.experience,
+    this.education,
+    this.position,
   });
 }

@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:resume_builder/resume_details.dart';
 import 'package:resume_builder/resume_form.dart';
+import 'package:sizer/sizer.dart';
 
 class ResumeScreen extends StatefulWidget {
   @override
@@ -9,7 +11,7 @@ class ResumeScreen extends StatefulWidget {
 
 class _ResumeScreenState extends State<ResumeScreen> {
   final CollectionReference resumeCollection =
-  FirebaseFirestore.instance.collection('resumes');
+      FirebaseFirestore.instance.collection('resumes');
 
   @override
   Widget build(BuildContext context) {
@@ -33,46 +35,88 @@ class _ResumeScreenState extends State<ResumeScreen> {
                 ),
                 itemCount: resumeDocs.length,
                 itemBuilder: (context, index) {
-                  return Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black)),
-                        padding: EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              " Name: ${resumeDocs[index]["title"]}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 8.0),
-                            Text(
-                              " Description: ${resumeDocs[index]["description"]}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              " Address: ${resumeDocs[index]["address"]}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              " Skills: ${resumeDocs[index]["skills"]}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ResumeDetails(
+                          email: resumeDocs[index]["email"].toString(),
+                          isEditScreen: false,
+                          phoneNumber:
+                              resumeDocs[index]["phoneNumber"].toString(),
+                          docId: resumeDocs[index].id,
+                          name: resumeDocs[index]["title"],
+                          description: resumeDocs[index]["description"],
+                          address: resumeDocs[index]["address"],
+                          skills: resumeDocs[index]["skills"],
+                          edutcation: resumeDocs[index]["education"],
+                          experiance: resumeDocs[index]["experience"],
+                          position: resumeDocs[index]["position"],
                         ),
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _deleteResumeItem(resumeDocs[index].id);
-                          },
+                      ));
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 50.h,
+                          width: 50.w,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                " Name: ${resumeDocs[index]["title"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                " Description: ${resumeDocs[index]["description"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                " Address: ${resumeDocs[index]["address"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                " Skills: ${resumeDocs[index]["skills"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          bottom: 1.sp,
+                          right: 20.sp,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20.sp,
+                                child: IconButton(
+                                  color: Colors.black54,
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () {
+                                    _deleteResumeItem(resumeDocs[index].id);
+                                  },
+                                ),
+                              ),
+                             SizedBox(width: 15.sp,),
+                             SizedBox(
+                               width: 20.sp,
+                               child:  IconButton(
+                                 color: Colors.black54,
+                                 icon: Icon(Icons.edit),
+                                 onPressed: () {
+                                   _navigateToResumeForm(resumeDocs[index]);
+                                 },
+                               ),
+                             )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -86,7 +130,9 @@ class _ResumeScreenState extends State<ResumeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ResumeForm()));
+            context,
+            MaterialPageRoute(builder: (context) => ResumeForm()),
+          );
         },
         child: Icon(Icons.add),
       ),

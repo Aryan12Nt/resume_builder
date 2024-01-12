@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:resume_builder/resume_screen.dart';
+import 'package:sizer/sizer.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  runApp( MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -14,10 +15,12 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'My App',
-      home: ResumeScreen(),
-    );
+    return Sizer(builder: (context, orientation, deviceType) {
+     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'My App',
+        home: ResumeScreen(),
+      );
+    });
   }
 }
