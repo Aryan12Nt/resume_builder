@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,15 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDzW8-e3voyo8XFrEdmhH-roAkFHHauUDY',
+    appId: '1:676829652596:web:16a1a4b0a7e0c1f3d15321',
+    messagingSenderId: '676829652596',
+    projectId: 'resume-98381',
+    authDomain: 'resume-98381.firebaseapp.com',
+    storageBucket: 'resume-98381.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyABXBpTQQC0CIrTfCiM-GdwbS6zbbULKL4',
     appId: '1:676829652596:android:abf2c95ca013a68fd15321',
@@ -64,5 +67,14 @@ class DefaultFirebaseOptions {
     projectId: 'resume-98381',
     storageBucket: 'resume-98381.appspot.com',
     iosBundleId: 'com.example.resumeBuilder',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDKTuBCpPQ3tZ8t-2lQYHSrM0kwq_g-j08',
+    appId: '1:676829652596:ios:51a838ac322eb794d15321',
+    messagingSenderId: '676829652596',
+    projectId: 'resume-98381',
+    storageBucket: 'resume-98381.appspot.com',
+    iosBundleId: 'com.example.resumeBuilder.RunnerTests',
   );
 }
